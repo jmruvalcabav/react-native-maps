@@ -552,7 +552,11 @@ id regionAsJSON(MKCoordinateRegion region) {
   CLLocationCoordinate2D b = CLLocationCoordinate2DMake(region.center.latitude - latitudeDelta,
                                                         region.center.longitude - longitudeDelta);
   GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:a coordinate:b];
-  return [map cameraForBounds:bounds insets:UIEdgeInsetsZero];
+  GMSCameraPosition* camera = [map cameraForBounds:bounds insets:UIEdgeInsetsZero];
+  return [GMSCameraPosition cameraWithTarget:camera.target
+                                          zoom: camera.zoom
+                                       bearing: -20
+                                  viewingAngle:45 ];
 }
 
 #pragma mark - Utils
