@@ -545,6 +545,22 @@ id regionAsJSON(MKCoordinateRegion region) {
   return [map cameraForBounds:bounds insets:UIEdgeInsetsZero];
 }
 
++ (GMSCameraPosition*) makeGMSCameraPositionFromMap:(GMSMapView *)map andMKCoordinateRegion:(MKCoordinateRegion)region {
+  float latitudeDelta = region.span.latitudeDelta * 0.5;
+  float longitudeDelta = region.span.longitudeDelta * 0.5;
+
+  CLLocationCoordinate2D a = CLLocationCoordinate2DMake(region.center.latitude + latitudeDelta,
+                                                        region.center.longitude + longitudeDelta);
+  CLLocationCoordinate2D b = CLLocationCoordinate2DMake(region.center.latitude - latitudeDelta,
+                                                        region.center.longitude - longitudeDelta);
+  GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:a coordinate:b];
+  GMSCameraPosition* camera = [map cameraForBounds:bounds insets:UIEdgeInsetsZero];
+  return [GMSCameraPosition cameraWithTarget:camera.target
+                                          zoom: camera.zoom
+                                       bearing: -20
+                                  viewingAngle:45 ];
+}
+
 #pragma mark - Utils
 
 - (CGRect) frameForMarker:(AIRGoogleMapMarker*) mrkView {
