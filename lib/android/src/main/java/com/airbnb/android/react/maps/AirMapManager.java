@@ -1,7 +1,8 @@
 package com.airbnb.android.react.maps;
 
 import android.view.View;
-
+import android.widget.RelativeLayout;
+import android.util.TypedValue;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
@@ -19,7 +20,7 @@ import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
-
+import com.google.android.gms.maps.SupportMapFragment;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -191,6 +192,14 @@ public class AirMapManager extends ViewGroupManager<AirMapView> {
 
   @ReactProp(name = "showsCompass", defaultBoolean = false)
   public void setShowsCompass(AirMapView view, boolean showsCompass) {
+    View compassButton = view.findViewById(0x5);
+    if (compassButton != null && compassButton.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
+      RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+      layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+      layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
+      layoutParams.setMargins(0,30,35,0);
+      compassButton.setLayoutParams(layoutParams);
+    }
     view.map.getUiSettings().setCompassEnabled(showsCompass);
   }
 
