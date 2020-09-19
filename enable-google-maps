@@ -10,6 +10,6 @@ if [[ -z "$GOOGLE_MAPS_INSTALL_LOCATION" ]]; then
 fi
 
 cat > lib/ios/User.xcconfig <<EOF
-FRAMEWORK_SEARCH_PATHS = \$(inherited) \$(SRCROOT)/../../../../$GOOGLE_MAPS_INSTALL_LOCATION
+FRAMEWORK_SEARCH_PATHS = \$(inherited) \$(SRCROOT)/../../../../../$GOOGLE_MAPS_INSTALL_LOCATION
 GCC_PREPROCESSOR_DEFINITIONS = \$(inherited) HAVE_GOOGLE_MAPS=1
 EOF
